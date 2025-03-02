@@ -1,10 +1,8 @@
 import re
 
-
 def load_dict(name):
     with open(name, 'r', encoding='utf-8') as file:
         return file.read().splitlines()
-
 
 def get_masked_words(mask, dictionary):
     list_of_words = []
@@ -21,7 +19,6 @@ def get_masked_words(mask, dictionary):
             list_of_words.append(word)
     return list_of_words
 
-
 def filter_by_extra_letters(words, extra_letters):
     filtered_words = []
     for word in words:
@@ -30,7 +27,6 @@ def filter_by_extra_letters(words, extra_letters):
         if extra_set.issubset(word_set):
             filtered_words.append(word)
     return filtered_words
-
 
 def main():
     print("Выберите язык / Choose language:")
@@ -49,34 +45,42 @@ def main():
         print("Неправильный выбор / Incorrect choice.")
         return
     
-    if lang == 'ru':
-        mask = input("Введите маску (например, а_то__з): ")
-        extra_letters = input("Введите дополнительные буквы (без пробелов): ")
-        result_text = "Список подходящих слов:"
-        no_result_text = "Подходящих слов не найдено."
-    else:
-        mask = input("Enter mask (e.g., a_t_o__z): ")
-        extra_letters = input("Enter additional letters (without spaces): ")
-        result_text = "List of matching words:"
-        no_result_text = "No matching words found."
-    
-    print(f"Дополнительные буквы: {extra_letters} / Additional letters: {extra_letters}")
-    
-    masked_words = get_masked_words(mask, dictionary)
-    filtered_words = filter_by_extra_letters(masked_words, extra_letters)
-    
-    if filtered_words:
-        print(result_text)
-        for word in filtered_words:
-            print(word)
-    elif masked_words:
-        print("Слова по маске найдены, но не содержат все дополнительные буквы.")
-        print("Список слов по маске:")
-        for word in masked_words:
-            print(word)
-    else:
-        print(no_result_text)
-
+    while True:
+        if lang == 'ru':
+            mask = input("Введите маску (например, а_то__з): ")
+            extra_letters = input("Введите дополнительные буквы (без пробелов): ")
+            result_text = "Список подходящих слов:"
+            no_result_text = "Подходящих слов не найдено."
+        else:
+            mask = input("Enter mask (e.g., a_t_o__z): ")
+            extra_letters = input("Enter additional letters (without spaces): ")
+            result_text = "List of matching words:"
+            no_result_text = "No matching words found."
+        
+        print(f"Дополнительные буквы: {extra_letters} / Additional letters: {extra_letters}")
+        
+        masked_words = get_masked_words(mask, dictionary)
+        filtered_words = filter_by_extra_letters(masked_words, extra_letters)
+        
+        if filtered_words:
+            print(result_text)
+            for word in filtered_words:
+                print(word)
+        elif masked_words:
+            print("Слова по маске найдены, но не содержат все дополнительные буквы.")
+            print("Список слов по маске:")
+            for word in masked_words:
+                print(word)
+        else:
+            print(no_result_text)
+        
+        if lang == 'ru':
+            check_again = input("Хотите проверить еще одно слово? (да/нет): ")
+        else:
+            check_again = input("Do you want to check another word? (yes/no): ")
+        
+        if check_again.lower() not in ['да', 'yes']:
+            break
 
 if __name__ == "__main__":
     main()
