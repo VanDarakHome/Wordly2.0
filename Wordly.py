@@ -81,7 +81,8 @@ def select_difficulty(language):
             "max_length": "Введите максимальную длину слова: ",
             "attempts": "Введите количество попыток: ",
             "invalid_length": "Длина слова должна быть не более 30 букв.",
-            "invalid_attempts": "Количество попыток должно быть положительным."
+            "invalid_attempts": "Количество попыток должно быть положительным.",
+            "min_length_error": "Длина слова должна быть не менее 2 букв."
         }
     else:
         length_limit_for_custom = 18
@@ -95,7 +96,8 @@ def select_difficulty(language):
             "max_length": "Enter maximum word length: ",
             "attempts": "Enter number of attempts: ",
             "invalid_length": "Word length must not exceed 18 letters.",
-            "invalid_attempts": "Number of attempts must be positive."
+            "invalid_attempts": "Number of attempts must be positive.",
+            "min_length_error": "Word length must be at least 2 letters."
         }
 
     print(phrases["difficulty"])
@@ -114,6 +116,13 @@ def select_difficulty(language):
     elif choice == '4':
         while True:
             min_len = int(input(phrases["min_length"]))
+            if min_len < 2:
+                print(phrases["min_length_error"])
+            elif min_len > length_limit_for_custom:
+                print(phrases["invalid_length"])
+            else:
+                break
+        while True:
             max_len = int(input(phrases["max_length"]))
             if max_len > length_limit_for_custom:
                 print(phrases["invalid_length"])
